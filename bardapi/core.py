@@ -69,7 +69,7 @@ class Bard:
             raise Exception("SNlM0e value not found in response. Check __Secure-1PSID value.")
         return snim0e.group(1)
 
-    def _extract_links(self, data:list) -> list:
+    def _extract_links(self, data: list) -> list:
         """
         Extract links from the given data.
 
