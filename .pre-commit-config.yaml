@@ -1,0 +1,24 @@
+repos:
+- repo: https://github.com/pycqa/isort
+  rev: 5.12.0
+  hooks:
+  - id: isort
+    name: isort
+- repo: http://github.com/psf/black
+  rev: 22.3.0
+  hooks:
+  - id: black
+    name: black
+- repo: https://github.com/pre-commit/mirrors-mypy
+  rev: v1.1.1
+  hooks:
+  - id: mypy
+    name: mypy
+    entry: mypy
+    stages: [push]
+    additional_dependencies: ["types-colorama==0.4.15.11", "types-requests==2.31.0.0"]
+- repo: https://github.com/pre-commit/pre-commit-hooks
+  rev: v1.1.1
+  hooks:
+  - id: flake8
+    name: flake8
