@@ -50,8 +50,8 @@ class ChatBard:
             os.getenv("_BARD_API_TIMEOUT") or input("Enter the timeout value (Just press enter to set 30 sec): ") or 30
         )
 
-        session = requests.Session() 
-        session.headers = SESSION_HEADERS # type: ignore
+        session = requests.Session()
+        session.headers = SESSION_HEADERS  # type: ignore
         session.cookies.set("__Secure-1PSID", token)
 
         return Bard(token=token, session=session, timeout=timeout, language=language)
@@ -79,7 +79,9 @@ class ChatBard:
                     Image links: {response['images']}{Fore.RESET}{Style.RESET_ALL}"
                 )
             else:
-                print(f"{Fore.BLUE}{Style.BRIGHT}Chatbot: \
-                       {response['content']} {Fore.RESET}{Style.RESET_ALL}")
+                print(
+                    f"{Fore.BLUE}{Style.BRIGHT}Chatbot: \
+                       {response['content']} {Fore.RESET}{Style.RESET_ALL}"
+                )
 
         print(f"{SEPARATOR_LINE}\n{Fore.RED}Chat Ended.{Fore.RESET}\n\nDanielPark's Chat Template\n{SEPARATOR_LINE}")

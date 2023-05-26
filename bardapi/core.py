@@ -41,8 +41,8 @@ class Bard:
         self.response_id = ""
         self.choice_id = ""
         if session is None:
-            self.session = requests.Session() 
-            self.session.headers = SESSION_HEADERS # type: ignore
+            self.session = requests.Session()
+            self.session.headers = SESSION_HEADERS  # type: ignore
             self.session.cookies.set("__Secure-1PSID", self.token)
 
         else:
