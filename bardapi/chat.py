@@ -22,10 +22,10 @@ class ChatBard:
         chat.start()
     """
 
-    def __init__(self):
-        self.bard = None
+    def __init__(self) -> None:
+        self.bard = self.initialize_bard()
 
-    def initialize_bard(self):
+    def initialize_bard(self) -> Bard:
         """
         Initializes the Bard API instance.
 
@@ -50,21 +50,19 @@ class ChatBard:
             os.getenv("_BARD_API_TIMEOUT") or input("Enter the timeout value (Just press enter to set 30 sec): ") or 30
         )
 
-        session = requests.Session()
-        session.headers = SESSION_HEADERS
+        session = requests.Session() 
+        session.headers = SESSION_HEADERS # type: ignore
         session.cookies.set("__Secure-1PSID", token)
 
-        self.bard = Bard(token=token, session=session, timeout=timeout, language=language)
+        return Bard(token=token, session=session, timeout=timeout, language=language)
 
-    def start(self):
+    def start(self) -> None:
         """
         Starts the chatbot interaction.
 
         Takes user input and retrieves responses from the Bard API until the user enters "quit", "q", or "stop".
         Prints the chatbot's response, including image links if available.
         """
-        self.initialize_bard()
-
         print(f"{SEPARATOR_LINE}\n{Back.BLUE}          Welcome to Chatbot        {Back.RESET}\n{SEPARATOR_LINE}")
         print("If you enter quit, q, or stop, the chat will end.")
 

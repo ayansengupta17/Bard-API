@@ -3,7 +3,7 @@ import os
 import random
 import re
 import string
-
+from typing import Optional
 import requests
 from deep_translator import GoogleTranslator
 
@@ -17,21 +17,21 @@ class Bard:
 
     def __init__(
         self,
-        token: str = None,
+        token: Optional[str] = None,
         timeout: int = 20,
-        proxies: dict = None,
-        session: requests.Session = None,
-        language: str = None,
+        proxies: Optional[dict] = None,
+        session: Optional[requests.Session] = None,
+        language: Optional[str] = None,
     ) -> None:
         """
         Initialize the Bard instance.
 
         Args:
-            token (str): Bard API token.
-            timeout (int): Request timeout in seconds.
-            proxies (dict): Proxy configuration for requests.
-            session (requests.Session): Requests session object.
-            language (str): Language code for translation (e.g., "en", "ko", "ja").
+            token: Bard API token.
+            timeout: Request timeout in seconds.
+            proxies: Proxy configuration for requests.
+            session: Requests session object.
+            language: Language code for translation (e.g., "en", "ko", "ja").
         """
         self.token = token or os.getenv("_BARD_API_KEY")
         self.proxies = proxies
@@ -41,8 +41,8 @@ class Bard:
         self.response_id = ""
         self.choice_id = ""
         if session is None:
-            self.session = requests.Session()
-            self.session.headers = SESSION_HEADERS
+            self.session = requests.Session() 
+            self.session.headers = SESSION_HEADERS # type: ignore
             self.session.cookies.set("__Secure-1PSID", self.token)
 
         else:
@@ -55,7 +55,7 @@ class Bard:
         Get the SNlM0e value from the Bard API response.
 
         Returns:
-            str: SNlM0e value.
+            SNlM0e value.
         Raises:
             Exception: If the __Secure-1PSID value is invalid or SNlM0e value is not found in the response.
         """
@@ -77,7 +77,7 @@ class Bard:
             data: Data to extract links from.
 
         Returns:
-            list: Extracted links.
+            Extracted links.
         """
         links = []
         if isinstance(data, list):
@@ -99,10 +99,10 @@ class Bard:
         >>> print(response['content'])
 
         Args:
-            input_text (str): Input text for the query.
+            input_text: Input text for the query.
 
         Returns:
-            dict: Answer from the Bard API in the following format:
+            Answer from the Bard API in the following format:
                 {
                     "content": str,
                     "conversation_id": str,
@@ -140,7 +140,7 @@ class Bard:
         resp_dict = json.loads(resp.content.splitlines()[3])[0][2]
 
         if not resp_dict:
-            return {"content": f"Response Error: {resp.content}."}
+            return {"content": f"Response Error: {resp.content.decode('utf8')}."}
         resp_json = json.loads(resp_dict)
         images = set()
         if len(resp_json) >= 3:

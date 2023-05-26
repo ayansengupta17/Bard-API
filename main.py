@@ -1,4 +1,4 @@
-from bardapi import ChatBard
+from bardapi.chat import ChatBard
 
 
 if __name__ == "__main__":
